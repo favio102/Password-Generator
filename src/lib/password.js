@@ -1,3 +1,14 @@
+function shuffle(arr) {
+  const array = [...arr];
+  for (let i = arr.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    let temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+}
+
 function getRandomChar(text) {
   return text[Math.floor(Math.random() * text.length)];
 }
@@ -14,27 +25,26 @@ export function generatePassword(config) {
   let alphabet = LOWERCASE;
   result += getRandomChar(LOWERCASE);
 
-  if (config.uppercase){
+  if (config.uppercase) {
     alphabet += UPPERCASE;
     result += getRandomChar(UPPERCASE);
-    charToSkip ++
+    charToSkip++;
   }
 
-  if (config.number){
+  if (config.number) {
     alphabet += NUMBERS;
     result += getRandomChar(NUMBERS);
-    charToSkip ++
+    charToSkip++;
   }
 
-  if (config.special){
+  if (config.special) {
     alphabet += SPECIALS;
     result += getRandomChar(SPECIALS);
-    charToSkip ++
+    charToSkip++;
   }
 
-  for (let i=charToSkip; i<Number(config.size); i++){
-    result += getRandomChar(alphabet)
+  for (let i = charToSkip; i < Number(config.size); i++) {
+    result += getRandomChar(alphabet);
   }
-  console.log('>>>>>',result);
-  return result;
+  return shuffle(result).join("");
 }
